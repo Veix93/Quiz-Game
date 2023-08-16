@@ -1,4 +1,4 @@
-package com.sda.Quiz.Game.controller;
+package com.sda.Quiz.Game.frontend;
 
 
 import com.sda.Quiz.Game.dto.HealthCheckDto;

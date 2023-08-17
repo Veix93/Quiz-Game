@@ -2,6 +2,7 @@ package com.sda.Quiz.Game.services;
 
 import com.sda.Quiz.Game.dto.CategoriesDto;
 import com.sda.Quiz.Game.dto.QuestionsDto;
+import com.sda.Quiz.Game.frontend.GameOptions;
 import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -22,18 +23,20 @@ public class QuizDataService {
     }
 
 
-    public void getQuizQuestions() {
+    public List<QuestionsDto.QuestionDto> getQuizQuestions(GameOptions gameOptions) {
         RestTemplate restTemplate = new RestTemplate();
 
         URI uri = UriComponentsBuilder.fromHttpUrl("https://opentdb.com/api.php")
-                .queryParam("amount", 2)
-                .queryParam("category", 25)
-                .queryParam("difficulty", "medium")
+                .queryParam("amount", gameOptions.getNumberOfQuestions())
+                .queryParam("category", gameOptions.getCategoryId())
+                .queryParam("difficulty", gameOptions.getDifficulty().name().toLowerCase())
                 .build().toUri();
-        log.info("Quiz questions retrieve URL: " + uri);
+        log.info("Quiz question retrieve URL: " + uri);
 
         QuestionsDto result = restTemplate.getForObject(uri, QuestionsDto.class);
         assert result != null;
         log.info("Quiz questions: " + result.getResults());
+        return result.getResults();
+
     }
 }

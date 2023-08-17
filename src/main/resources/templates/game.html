@@ -6,9 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <meta name="description" content="" />
   <meta name="author" content="" />
-  <title>Quiz Application</title>
+  <title>Quiz Application - game</title>
 
-  <link rel="icon" type="image/x-icon" th:src="@{/}" href="assets/favicon.ico" />
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
   <!-- Core theme CSS (includes Bootstrap)-->
   <link href="css/styles.css" rel="stylesheet" />
 </head>
@@ -17,7 +17,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
   <div class="container">
-    <a class="navbar-brand js-scroll-trigger" href="#page-top">Quiz Application</a>
+    <a class="navbar-brand js-scroll-trigger" th:href="@{/}">Quiz Application - game</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
             aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -25,7 +25,7 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="#about">About</a>
+          <a class="nav-link js-scroll-trigger" href="#options">Options</a>
         </li>
         <li class="nav-item">
           <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
@@ -34,29 +34,36 @@
     </div>
   </div>
 </nav>
-<!-- Header-->
-<header class="bg-primary text-white">
-  <div class="container text-center">
-    <h1>Ready for an adventure?</h1>
-    <p class="lead">Go ahead and try yourself in Quiz!</p>
-    <br />
-    <a class="btn btn-dark" href="/select">Play now!</a>
-  </div>
-</header>
-<!-- About section-->
-<section id="about">
+<!-- Option section-->
+<section id="options">
   <div class="container">
-    <div class="row">
-      <div class="col-lg-8 mx-auto">
-        <h2>About this quiz</h2>
-        <p class="lead"> This quiz is all about knowledge!</p>
-        <ul>
-          <li>You can select from various different categories</li>
-          <li>Feel free to pick proper difficulty level - you can choose between easy, medium and hard</li>
-          <li>If you're brave enough, you can select random category and difficulty level - you'll never know what you'll get!</li>
-        </ul>
+    <form action="#" th:action="@{/game}" th:object="${userAnswer}" method="post">
+      <div class="form-row">
+        <h3 th:text="'Question ' + ${currentQuestionNumber} + '/' + ${totalQuestionNumber} + ':'"></h3>
+        <h4 th:text="${currentQuestion}"></h4>
       </div>
-    </div>
+      <div class="form-row">
+        <div class="form-group">
+          <p>Select correct answer:</p>
+          <th:block th:each="answer,iter : ${currentQuestionAnswers}">
+            <div class="form-check">
+              <label>
+                <input class="form-check-input" type="radio" name="answersRadioOptions"
+                       th:id="'answer_' + ${iter.current}" th:value="${answer}" th:field="*{answer}">
+              </label>
+              <label class="form-check-label" th:for="'answer_' + ${iter.current}"
+                     th:text="${answer}">
+              </label>
+            </div>
+          </th:block>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Next</button>
+        </div>
+      </div>
+    </form>
   </div>
 </section>
 <!-- Contact section-->

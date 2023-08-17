@@ -1,8 +1,10 @@
 package com.sda.Quiz.Game;
 
 import com.sda.Quiz.Game.entities.PlayerEntity;
+import com.sda.Quiz.Game.frontend.GameOptions;
 import com.sda.Quiz.Game.repositories.PlayerRepository;
 import com.sda.Quiz.Game.services.QuizDataService;
+import jakarta.transaction.Transactional;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -33,7 +35,7 @@ public class StartupRunner implements CommandLineRunner {
         playerRepository.save(new PlayerEntity("Harry"));
         playerRepository.save(new PlayerEntity("George"));
         quizDataService.getQuizCategories();
-        quizDataService.getQuizQuestions();
+
 
         log.info("List of players from database:");
         List<PlayerEntity> playersFromDatabase = playerRepository.findAll();

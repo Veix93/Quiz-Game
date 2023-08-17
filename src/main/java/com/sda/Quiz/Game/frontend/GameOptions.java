@@ -7,4 +7,5 @@ public class GameOptions {
     private int numberOfQuestions;
     private Difficulty difficulty;
     private int categoryId;
+
 }
